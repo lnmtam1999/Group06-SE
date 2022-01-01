@@ -1,4 +1,4 @@
-import 'dart:html' as d;
+import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_shop/Admin/adminShiftOrders.dart';
@@ -344,10 +344,10 @@ class _UploadPageState extends State<UploadPage>
   Future<String> uploadItemImage(mFileImage) async {
     final Reference storageReference =
         FirebaseStorage.instance.ref().child("Item");
-    // UploadTask upTask =
-    //     storageReference.child("product_$productId.jpg").putFile(mFileImage);
-    TaskSnapshot uploadTask = await storageReference.putFile(mFileImage);
-    String downloadUrl = await uploadTask.ref.getDownloadURL();
+    UploadTask upTask =
+         storageReference.child("product_$productId.jpg").putFile(mFileImage);
+    // TaskSnapshot uploadTask = await storageReference.putFile(mFileImage);
+    String downloadUrl = await (await upTask).ref.getDownloadURL();
     return downloadUrl;
   }
 
@@ -365,7 +365,7 @@ class _UploadPageState extends State<UploadPage>
     itemsRef.doc(productId).set({
       "shortInfo": _shortInfotextEditingController.text.trim(),
       "longDiscription": _discriptionTextEditingController.text.trim(),
-      "price": _priceTextEditingController.text.trim(),
+      "price": int.parse(_priceTextEditingController.text),
       "publishedDate": DateTime.now(),
       "thumbnailUrl": downloadUrl,
       "status": "available",
