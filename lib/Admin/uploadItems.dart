@@ -1,3 +1,4 @@
+import 'dart:html' as d;
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_shop/Admin/adminShiftOrders.dart';
@@ -17,7 +18,7 @@ class UploadPage extends StatefulWidget {
 class _UploadPageState extends State<UploadPage>
     with AutomaticKeepAliveClientMixin<UploadPage> {
   bool get wantKeepAlive => true;
-  XFile file;
+  File file;
   TextEditingController _discriptionTextEditingController =
       TextEditingController();
   TextEditingController _priceTextEditingController = TextEditingController();
@@ -166,8 +167,9 @@ class _UploadPageState extends State<UploadPage>
     Navigator.pop(context);
     XFile imageFile = await ImagePicker().pickImage(
         source: ImageSource.camera, maxWidth: 970.0, maxHeight: 600.0);
+    File imgFile = File(imageFile.path);
     setState(() {
-      file = imageFile;
+      file = imgFile;
     });
   }
 
@@ -176,12 +178,13 @@ class _UploadPageState extends State<UploadPage>
     XFile imageFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
     );
+    File imgFile = File(imageFile.path);
     setState(() {
-      file = imageFile;
+      file = imgFile;
     });
   }
 
-  displayAdminUploadFromScreen() {
+  displayAdminUploadFormScreen() {
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: Container(
@@ -209,7 +212,7 @@ class _UploadPageState extends State<UploadPage>
         ),
         actions: [
           FlatButton(
-            onPressed: () => print("clicked"),
+            onPressed: () => uploadImageAndSaveItemInfo(),
             child: Text("Add",
                 style: TextStyle(
                     color: Colors.pink,
@@ -218,9 +221,164 @@ class _UploadPageState extends State<UploadPage>
           ),
         ],
       ),
-      body: ListView(),
+      body: ListView(
+        children: [
+          uploading ? linearProgress() : Text(""),
+          Container(
+            height: 230.0,
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: Center(
+              child: AspectRatio(
+                aspectRatio: 16 / 9,
+                child: Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: FileImage(file), fit: BoxFit.cover)),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 12.0),
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.perm_device_information,
+              color: Colors.pink,
+            ),
+            title: Container(
+              width: 250.0,
+              child: TextField(
+                style: TextStyle(color: Colors.deepPurpleAccent),
+                controller: _shortInfotextEditingController,
+                decoration: InputDecoration(
+                  hintText: "Short Info",
+                  hintStyle: TextStyle(color: Colors.deepPurpleAccent),
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+          ),
+          Divider(
+            color: Colors.pink,
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.perm_device_information,
+              color: Colors.pink,
+            ),
+            title: Container(
+              width: 250.0,
+              child: TextField(
+                style: TextStyle(color: Colors.deepPurpleAccent),
+                controller: _titleTextEditingController,
+                decoration: InputDecoration(
+                  hintText: "Title",
+                  hintStyle: TextStyle(color: Colors.deepPurpleAccent),
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+          ),
+          Divider(
+            color: Colors.pink,
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.perm_device_information,
+              color: Colors.pink,
+            ),
+            title: Container(
+              width: 250.0,
+              child: TextField(
+                style: TextStyle(color: Colors.deepPurpleAccent),
+                controller: _discriptionTextEditingController,
+                decoration: InputDecoration(
+                  hintText: "Description",
+                  hintStyle: TextStyle(color: Colors.deepPurpleAccent),
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+          ),
+          Divider(
+            color: Colors.pink,
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.perm_device_information,
+              color: Colors.pink,
+            ),
+            title: Container(
+              width: 250.0,
+              child: TextField(
+                keyboardType: TextInputType.number,
+                style: TextStyle(color: Colors.deepPurpleAccent),
+                controller: _priceTextEditingController,
+                decoration: InputDecoration(
+                  hintText: "Price",
+                  hintStyle: TextStyle(color: Colors.deepPurpleAccent),
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+          ),
+          Divider(
+            color: Colors.pink,
+          ),
+        ],
+      ),
     );
   }
 
-  clearFormInfo() {}
+  clearFormInfo() {
+    setState(() {
+      file = null;
+      _discriptionTextEditingController.clear();
+      _priceTextEditingController.clear();
+      _shortInfotextEditingController.clear();
+      _titleTextEditingController.clear();
+    });
+  }
+
+  Future<String> uploadItemImage(mFileImage) async {
+    final Reference storageReference =
+        FirebaseStorage.instance.ref().child("Item");
+    // UploadTask upTask =
+    //     storageReference.child("product_$productId.jpg").putFile(mFileImage);
+    TaskSnapshot uploadTask = await storageReference.putFile(mFileImage);
+    String downloadUrl = await uploadTask.ref.getDownloadURL();
+    return downloadUrl;
+  }
+
+  uploadImageAndSaveItemInfo() async {
+    setState(() {
+      uploading = true;
+    });
+    String imageDownloadUrl = await uploadItemImage(file);
+
+    saveItemInfo(imageDownloadUrl);
+  }
+
+  saveItemInfo(String downloadUrl) {
+    final itemsRef = FirebaseFirestore.instance.collection("items");
+    itemsRef.doc(productId).set({
+      "shortInfo": _shortInfotextEditingController.text.trim(),
+      "longDiscription": _discriptionTextEditingController.text.trim(),
+      "price": _priceTextEditingController.text.trim(),
+      "publishedDate": DateTime.now(),
+      "thumbnailUrl": downloadUrl,
+      "status": "available",
+      "title": _titleTextEditingController.text.trim(),
+    });
+    setState(() {
+      file = null;
+      uploading = false;
+      productId = DateTime.now().millisecondsSinceEpoch.toString();
+      _discriptionTextEditingController.clear();
+      _titleTextEditingController.clear();
+      _shortInfotextEditingController.clear();
+      _priceTextEditingController.clear();
+    });
+  }
 }
