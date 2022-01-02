@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
 }
 
 class SplashScreen extends StatefulWidget {
-  @override
+  @override 
   _SplashScreenState createState() => _SplashScreenState();
 }
 
