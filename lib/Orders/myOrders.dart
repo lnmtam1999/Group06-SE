@@ -45,14 +45,17 @@ class _MyOrdersState extends State<MyOrders> {
           stream: EcommerceApp.firestore
           .collection(EcommerceApp.collectionUser)
           .doc(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
-          .collection(EcommerceApp.collectionUser).snapshots(),
+          .collection(EcommerceApp.collectionOrders).snapshots(),
 
           builder: (c,snapshot){
             return snapshot.hasData
                 ? ListView.builder(
+
               itemCount: snapshot.data.docs.length,
               itemBuilder: (c,index){
+                print("a");
                 Map<String, dynamic> order = snapshot.data.docs[index].data();
+
                 return FutureBuilder<QuerySnapshot>(
                   future: FirebaseFirestore.instance.collection("items").where("shortInfo",whereIn: order[EcommerceApp.productID]).get(),
 

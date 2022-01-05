@@ -64,7 +64,7 @@ class _PaymentPageState extends State<PaymentPage> {
       EcommerceApp.addressID: widget.addressId,
       EcommerceApp.totalAmount: widget.totalAmount,
       "orderBy": EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID),
-      EcommerceApp.productID: EcommerceApp.sharedPreferences.getString(EcommerceApp.userCartList),
+      EcommerceApp.productID: EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList),
       EcommerceApp.paymentDetails: "Cash on Delivery",
       EcommerceApp.orderTime: DateTime.now().millisecondsSinceEpoch.toString(),
       EcommerceApp.isSuccess: true,
@@ -73,7 +73,7 @@ class _PaymentPageState extends State<PaymentPage> {
       EcommerceApp.addressID: widget.addressId,
       EcommerceApp.totalAmount: widget.totalAmount,
       "orderBy": EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID),
-      EcommerceApp.productID: EcommerceApp.sharedPreferences.getString(EcommerceApp.userCartList),
+      EcommerceApp.productID: EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList),
       EcommerceApp.paymentDetails: "Cash on Delivery",
       EcommerceApp.orderTime: DateTime.now().millisecondsSinceEpoch.toString(),
       EcommerceApp.isSuccess: true,
@@ -100,6 +100,7 @@ class _PaymentPageState extends State<PaymentPage> {
 
 
   Future writeOrderDetailsForUser(Map<String,dynamic> data) async{
+
     await EcommerceApp.firestore.collection(EcommerceApp.collectionUser)
         .doc(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
         .collection(EcommerceApp.collectionOrders)

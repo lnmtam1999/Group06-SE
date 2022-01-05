@@ -309,7 +309,8 @@ Widget card({Color primaryColor = Colors.redAccent, String imgPath}) {
         boxShadow: <BoxShadow>[
           BoxShadow(
               offset: Offset(0, 5), blurRadius: 10.0, color: Colors.grey[200]),
-        ]),
+        ]
+    ),
     child: ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(20.0)),
       child: Image.network(

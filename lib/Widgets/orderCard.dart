@@ -116,7 +116,7 @@ Widget sourceOrderInfo(ItemModel model, BuildContext context,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(top: 0.0),
+                        padding: EdgeInsets.only(top: 5.0),
                         child: Row(
                           children: [
                             Text(
