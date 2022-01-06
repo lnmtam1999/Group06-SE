@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_shop/Store/storehome.dart';
 import 'package:flutter/material.dart';
 import 'package:e_shop/Config/config.dart';
 import 'package:flutter/services.dart';
@@ -40,7 +41,10 @@ class _MyOrdersState extends State<MyOrders> {
                 color: Colors.white,
               ),
               onPressed: () {
-                SystemNavigator.pop();
+                // SystemNavigator.pop();
+                Route route =
+                MaterialPageRoute(builder: (c) => StoreHome());
+                Navigator.pushReplacement(context, route);
               },
             ),
           ],
@@ -57,7 +61,7 @@ class _MyOrdersState extends State<MyOrders> {
                 ? ListView.builder(
                     itemCount: snapshot.data.docs.length,
                     itemBuilder: (c, index) {
-                      print("a");
+
                       Map<String, dynamic> order =
                           snapshot.data.docs[index].data();
 

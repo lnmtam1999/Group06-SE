@@ -64,7 +64,7 @@ class _UploadPageState extends State<UploadPage>
             child: Text(
               "logout",
               style: TextStyle(
-                  color: Colors.orange,
+                  color: Colors.white,
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold),
             ),
@@ -215,7 +215,7 @@ class _UploadPageState extends State<UploadPage>
             onPressed: () => uploadImageAndSaveItemInfo(),
             child: Text("Add",
                 style: TextStyle(
-                    color: Colors.orange,
+                    color: Colors.white,
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold)),
           ),
@@ -364,7 +364,7 @@ class _UploadPageState extends State<UploadPage>
     final itemsRef = FirebaseFirestore.instance.collection("items");
     itemsRef.doc(productId).set({
       "shortInfo": _shortInfotextEditingController.text.trim(),
-      "longDiscription": _discriptionTextEditingController.text.trim(),
+      "longDescription": _discriptionTextEditingController.text.trim(),
       "price": int.parse(_priceTextEditingController.text),
       "publishedDate": DateTime.now(),
       "thumbnailUrl": downloadUrl,

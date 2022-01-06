@@ -27,7 +27,7 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
       ),
       centerTitle: true,
       title: Text(
-        "E-Shop",
+        "Instant Noodles",
         style: TextStyle(
             fontSize: 55.0, color: Colors.white, fontFamily: "Signatra"),
       ),

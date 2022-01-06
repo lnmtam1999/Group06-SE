@@ -35,16 +35,19 @@ class OrderDetails extends StatelessWidget {
                 .doc(orderID)
                 .get(),
             builder: (c, snapshot) {
-              Map dataMap;
+              // Map dataMap;
+              Map<String, dynamic> dataMap;
+
               if (snapshot.hasData) {
-                dataMap = snapshot.data.data();
+                dataMap = snapshot.data.data() ;
+
               }
               return snapshot.hasData
                   ? Container(
                       child: Column(
                         children: [
                           StatusBanner(
-                            status: dataMap[EcommerceApp.isSuccess],
+                            status: dataMap[EcommerceApp.isSuccess] ,
                           ),
                           SizedBox(
                             height: 10.0,

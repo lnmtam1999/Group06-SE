@@ -42,7 +42,7 @@ class _StoreHomeState extends State<StoreHome> {
             ),
           ),
           title: Text(
-            "E-Shop",
+            "Instant Noodles",
             style: TextStyle(
                 fontSize: 55.0, color: Colors.white, fontFamily: "Signatra"),
           ),

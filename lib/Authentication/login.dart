@@ -96,10 +96,10 @@ class _LoginState extends State<Login> {
             FlatButton.icon(
               onPressed: () => Navigator.push(context,
                   MaterialPageRoute(builder: (context) => AdminSignInPage())),
-              icon: (Icon(Icons.nature_people, color: Colors.orange)),
+              icon: (Icon(Icons.nature_people, color: Colors.black)),
               label: Text("I'm Admin",
                   style: TextStyle(
-                      color: Colors.orange, fontWeight: FontWeight.bold)),
+                      color: Colors.black, fontWeight: FontWeight.bold)),
             ),
           ],
         ),

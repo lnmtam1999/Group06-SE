@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class EcommerceApp
 {
-   static const String appName = 'e-Shop';
+   static const String appName = 'Instant Noodles';
 
    static SharedPreferences sharedPreferences;
    static User user;
