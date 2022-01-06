@@ -33,7 +33,7 @@ class _StoreHomeState extends State<StoreHome> {
           flexibleSpace: Container(
             decoration: new BoxDecoration(
               gradient: new LinearGradient(
-                colors: [Colors.pink, Colors.lightGreenAccent],
+                colors: [Colors.orange[600], Colors.orange[400]],
                 begin: const FractionalOffset(0.0, 0.0),
                 end: const FractionalOffset(1.0, 0.0),
                 stops: [0.0, 1.0],
@@ -53,7 +53,7 @@ class _StoreHomeState extends State<StoreHome> {
                 IconButton(
                   icon: Icon(
                     Icons.shopping_cart,
-                    color: Colors.pink,
+                    color: Colors.black,
                   ),
                   onPressed: () {
                     Route route = MaterialPageRoute(builder: (c) => CartPage());
@@ -66,7 +66,7 @@ class _StoreHomeState extends State<StoreHome> {
                       Icon(
                         Icons.brightness_1,
                         size: 20.0,
-                        color: Colors.green,
+                        color: Colors.orange[400],
                       ),
                       Positioned(
                         top: 3.0,
@@ -143,7 +143,7 @@ Widget sourceInfo(ItemModel model, BuildContext context,
           MaterialPageRoute(builder: (c) => ProductPage(itemModel: model));
       Navigator.pushReplacement(context, route);
     },
-    splashColor: Colors.pink,
+    splashColor: Colors.orange[400],
     child: Padding(
       padding: EdgeInsets.all(6.0),
       child: Container(
@@ -173,8 +173,8 @@ Widget sourceInfo(ItemModel model, BuildContext context,
                         Expanded(
                           child: Text(
                             model.title,
-                            style:
-                                TextStyle(color: Colors.pink, fontSize: 14.0),
+                            style: TextStyle(
+                                color: Colors.orange[400], fontSize: 14.0),
                           ),
                         ),
                       ],
@@ -265,7 +265,7 @@ Widget sourceInfo(ItemModel model, BuildContext context,
                         ? IconButton(
                             icon: Icon(
                               Icons.add_shopping_cart,
-                              color: Colors.pinkAccent,
+                              color: Colors.orangeAccent,
                             ),
                             onPressed: () {
                               checkItemInCart(model.shortInfo, context);
@@ -274,7 +274,7 @@ Widget sourceInfo(ItemModel model, BuildContext context,
                         : IconButton(
                             icon: Icon(
                               Icons.delete,
-                              color: Colors.pinkAccent,
+                              color: Colors.orangeAccent,
                             ),
                             onPressed: () {
                               removeCartFunction();
@@ -286,7 +286,7 @@ Widget sourceInfo(ItemModel model, BuildContext context,
                   ),
                   Divider(
                     height: 5.0,
-                    color: Colors.pink,
+                    color: Colors.orange,
                   ),
                 ],
               ),
@@ -309,8 +309,7 @@ Widget card({Color primaryColor = Colors.redAccent, String imgPath}) {
         boxShadow: <BoxShadow>[
           BoxShadow(
               offset: Offset(0, 5), blurRadius: 10.0, color: Colors.grey[200]),
-        ]
-    ),
+        ]),
     child: ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(20.0)),
       child: Image.network(

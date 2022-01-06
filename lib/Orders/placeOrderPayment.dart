@@ -12,13 +12,14 @@ class PaymentPage extends StatefulWidget {
   final String addressId;
   final double totalAmount;
 
-  PaymentPage({Key key,this.addressId,this.totalAmount,}) : super(key: key);
+  PaymentPage({
+    Key key,
+    this.addressId,
+    this.totalAmount,
+  }) : super(key: key);
   @override
   _PaymentPageState createState() => _PaymentPageState();
 }
-
-
-
 
 class _PaymentPageState extends State<PaymentPage> {
   @override
@@ -27,7 +28,7 @@ class _PaymentPageState extends State<PaymentPage> {
       child: Container(
         decoration: new BoxDecoration(
           gradient: new LinearGradient(
-            colors: [Colors.pink, Colors.lightGreenAccent],
+            colors: [Colors.orange[600], Colors.orange[400]],
             begin: const FractionalOffset(0.0, 0.0),
             end: const FractionalOffset(1.0, 0.0),
             stops: [0.0, 1.0],
@@ -41,16 +42,20 @@ class _PaymentPageState extends State<PaymentPage> {
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Image.asset("images/cash.png"),
-
               ),
-              SizedBox(height: 10.0,),
+              SizedBox(
+                height: 10.0,
+              ),
               FlatButton(
-                color: Colors.pinkAccent,
+                color: Colors.orangeAccent,
                 textColor: Colors.white,
                 padding: EdgeInsets.all(8.0),
                 splashColor: Colors.deepOrange,
-                onPressed: ()=>addOrderDetails(),
-                child: Text("Place Order",style:TextStyle(fontSize: 30.0,)),
+                onPressed: () => addOrderDetails(),
+                child: Text("Place Order",
+                    style: TextStyle(
+                      fontSize: 30.0,
+                    )),
               ),
             ],
           ),
@@ -59,12 +64,13 @@ class _PaymentPageState extends State<PaymentPage> {
     );
   }
 
-  addOrderDetails(){
+  addOrderDetails() {
     writeOrderDetailsForUser({
       EcommerceApp.addressID: widget.addressId,
       EcommerceApp.totalAmount: widget.totalAmount,
       "orderBy": EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID),
-      EcommerceApp.productID: EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList),
+      EcommerceApp.productID: EcommerceApp.sharedPreferences
+          .getStringList(EcommerceApp.userCartList),
       EcommerceApp.paymentDetails: "Cash on Delivery",
       EcommerceApp.orderTime: DateTime.now().millisecondsSinceEpoch.toString(),
       EcommerceApp.isSuccess: true,
@@ -73,46 +79,51 @@ class _PaymentPageState extends State<PaymentPage> {
       EcommerceApp.addressID: widget.addressId,
       EcommerceApp.totalAmount: widget.totalAmount,
       "orderBy": EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID),
-      EcommerceApp.productID: EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList),
+      EcommerceApp.productID: EcommerceApp.sharedPreferences
+          .getStringList(EcommerceApp.userCartList),
       EcommerceApp.paymentDetails: "Cash on Delivery",
       EcommerceApp.orderTime: DateTime.now().millisecondsSinceEpoch.toString(),
       EcommerceApp.isSuccess: true,
-    }).whenComplete(() => {
-      emptyCartNow()
-    });
+    }).whenComplete(() => {emptyCartNow()});
   }
 
-  emptyCartNow(){
-    EcommerceApp.sharedPreferences.setStringList(EcommerceApp.userCartList, ["garbageValue"]);
-    List tempList=EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList);
-    FirebaseFirestore.instance.collection("users").doc( EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
+  emptyCartNow() {
+    EcommerceApp.sharedPreferences
+        .setStringList(EcommerceApp.userCartList, ["garbageValue"]);
+    List tempList =
+        EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList);
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
         .update({
       EcommerceApp.userCartList: tempList,
     }).then((value) {
-      EcommerceApp.sharedPreferences.setStringList(EcommerceApp.userCartList, tempList);
-      Provider.of<CartItemCounter>(context,listen: false).displayResult();
+      EcommerceApp.sharedPreferences
+          .setStringList(EcommerceApp.userCartList, tempList);
+      Provider.of<CartItemCounter>(context, listen: false).displayResult();
     });
-    Fluttertoast.showToast(msg: "Congratulations, your order has been placed successfully.");
+    Fluttertoast.showToast(
+        msg: "Congratulations, your order has been placed successfully.");
 
     Route route = MaterialPageRoute(builder: (c) => SplashScreen());
     Navigator.pushReplacement(context, route);
   }
 
-
-  Future writeOrderDetailsForUser(Map<String,dynamic> data) async{
-
-    await EcommerceApp.firestore.collection(EcommerceApp.collectionUser)
+  Future writeOrderDetailsForUser(Map<String, dynamic> data) async {
+    await EcommerceApp.firestore
+        .collection(EcommerceApp.collectionUser)
         .doc(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
         .collection(EcommerceApp.collectionOrders)
-        .doc(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID)+ data['orderTime'])
+        .doc(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID) +
+            data['orderTime'])
         .set(data);
   }
 
-  Future writeOrderDetailsForAdmin(Map<String,dynamic> data) async{
+  Future writeOrderDetailsForAdmin(Map<String, dynamic> data) async {
     await EcommerceApp.firestore
         .collection(EcommerceApp.collectionOrders)
-        .doc(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID)+ data['orderTime'])
+        .doc(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID) +
+            data['orderTime'])
         .set(data);
   }
-
 }

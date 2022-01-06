@@ -4,30 +4,38 @@ import 'package:e_shop/Models/item.dart';
 import 'package:flutter/material.dart';
 import '../Store/storehome.dart';
 
-int counter=0;
+int counter = 0;
+
 class OrderCard extends StatelessWidget {
   final int itemCount;
   final List<DocumentSnapshot> data;
   final String orderID;
 
-  OrderCard({Key key,this.itemCount,this.data,this.orderID,}) : super(key: key);
+  OrderCard({
+    Key key,
+    this.itemCount,
+    this.data,
+    this.orderID,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  InkWell(
-      onTap: (){
+    return InkWell(
+      onTap: () {
         Route route;
-        if(counter==0){
-          counter=counter+1;
-          route=MaterialPageRoute(builder: (c)=> OrderDetails(orderID: orderID,));
-
+        if (counter == 0) {
+          counter = counter + 1;
+          route = MaterialPageRoute(
+              builder: (c) => OrderDetails(
+                    orderID: orderID,
+                  ));
         }
         Navigator.push(context, route);
       },
       child: Container(
         decoration: new BoxDecoration(
           gradient: new LinearGradient(
-            colors: [Colors.pink, Colors.lightGreenAccent],
+            colors: [Colors.orange[600], Colors.orange[400]],
             begin: const FractionalOffset(0.0, 0.0),
             end: const FractionalOffset(1.0, 0.0),
             stops: [0.0, 1.0],
@@ -36,11 +44,11 @@ class OrderCard extends StatelessWidget {
         ),
         padding: EdgeInsets.all(10.0),
         margin: EdgeInsets.all(10.0),
-        height: itemCount*190.0,
+        height: itemCount * 190.0,
         child: ListView.builder(
           itemCount: itemCount,
           physics: NeverScrollableScrollPhysics(),
-          itemBuilder: (c,index){
+          itemBuilder: (c, index) {
             ItemModel model = ItemModel.fromJson(data[index].data());
             return sourceOrderInfo(model, context);
           },
@@ -50,14 +58,11 @@ class OrderCard extends StatelessWidget {
   }
 }
 
-
-
 Widget sourceOrderInfo(ItemModel model, BuildContext context,
-    {Color background})
-{
-  width =  MediaQuery.of(context).size.width;
+    {Color background}) {
+  width = MediaQuery.of(context).size.width;
 
-  return  Container(
+  return Container(
     color: Colors.grey[100],
     height: 170.0,
     width: width,
@@ -66,7 +71,6 @@ Widget sourceOrderInfo(ItemModel model, BuildContext context,
         Image.network(
           model.thumbnailUrl,
           width: 180.0,
-
         ),
         SizedBox(
           width: 10.0,
@@ -85,8 +89,7 @@ Widget sourceOrderInfo(ItemModel model, BuildContext context,
                     Expanded(
                       child: Text(
                         model.title,
-                        style:
-                        TextStyle(color: Colors.pink, fontSize: 14.0),
+                        style: TextStyle(color: Colors.orange, fontSize: 14.0),
                       ),
                     ),
                   ],
@@ -100,8 +103,7 @@ Widget sourceOrderInfo(ItemModel model, BuildContext context,
                     Expanded(
                       child: Text(
                         model.title,
-                        style: TextStyle(
-                            color: Colors.black54, fontSize: 12.0),
+                        style: TextStyle(color: Colors.black54, fontSize: 12.0),
                       ),
                     ),
                   ],
@@ -145,7 +147,7 @@ Widget sourceOrderInfo(ItemModel model, BuildContext context,
               ),
               Divider(
                 height: 5.0,
-                color: Colors.pink,
+                color: Colors.orange,
               ),
             ],
           ),

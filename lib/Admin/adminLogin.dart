@@ -13,7 +13,7 @@ class AdminSignInPage extends StatelessWidget {
         flexibleSpace: Container(
           decoration: new BoxDecoration(
             gradient: new LinearGradient(
-              colors: [Colors.pink, Colors.lightGreenAccent],
+              colors: [Colors.orange[600], Colors.orange[400]],
               begin: const FractionalOffset(0.0, 0.0),
               end: const FractionalOffset(1.0, 0.0),
               stops: [0.0, 1.0],
@@ -52,7 +52,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
       child: Container(
         decoration: new BoxDecoration(
           gradient: new LinearGradient(
-            colors: [Colors.pink, Colors.lightGreenAccent],
+            colors: [Colors.orange[600], Colors.orange[400]],
             begin: const FractionalOffset(0.0, 0.0),
             end: const FractionalOffset(1.0, 0.0),
             stops: [0.0, 1.0],
@@ -129,7 +129,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
             Container(
               height: 4.0,
               width: _screenWidth = 0.8,
-              color: Colors.pink,
+              color: Colors.orange,
             ),
             SizedBox(
               height: 20.0,
@@ -137,10 +137,10 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
             FlatButton.icon(
               onPressed: () => Navigator.push(context,
                   MaterialPageRoute(builder: (context) => AuthenticScreen())),
-              icon: (Icon(Icons.nature_people, color: Colors.pink)),
+              icon: (Icon(Icons.nature_people, color: Colors.orange)),
               label: Text("I'm Admin",
                   style: TextStyle(
-                      color: Colors.pink, fontWeight: FontWeight.bold)),
+                      color: Colors.orange, fontWeight: FontWeight.bold)),
             ),
             SizedBox(
               height: 50.0,

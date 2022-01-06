@@ -41,7 +41,7 @@ class _UploadPageState extends State<UploadPage>
         flexibleSpace: Container(
           decoration: new BoxDecoration(
             gradient: new LinearGradient(
-              colors: [Colors.pink, Colors.lightGreenAccent],
+              colors: [Colors.orange[600], Colors.orange[400]],
               begin: const FractionalOffset(0.0, 0.0),
               end: const FractionalOffset(1.0, 0.0),
               stops: [0.0, 1.0],
@@ -64,7 +64,7 @@ class _UploadPageState extends State<UploadPage>
             child: Text(
               "logout",
               style: TextStyle(
-                  color: Colors.pink,
+                  color: Colors.orange,
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold),
             ),
@@ -83,7 +83,7 @@ class _UploadPageState extends State<UploadPage>
     return Container(
       decoration: new BoxDecoration(
         gradient: new LinearGradient(
-          colors: [Colors.pink, Colors.lightGreenAccent],
+          colors: [Colors.orange[600], Colors.orange[400]],
           begin: const FractionalOffset(0.0, 0.0),
           end: const FractionalOffset(1.0, 0.0),
           stops: [0.0, 1.0],
@@ -108,7 +108,7 @@ class _UploadPageState extends State<UploadPage>
                   "Add new items",
                   style: TextStyle(fontSize: 20.0, color: Colors.white),
                 ),
-                color: Colors.green,
+                color: Colors.orangeAccent,
                 onPressed: () => takeImage(context),
               ),
             ),
@@ -190,7 +190,7 @@ class _UploadPageState extends State<UploadPage>
         flexibleSpace: Container(
           decoration: new BoxDecoration(
             gradient: new LinearGradient(
-              colors: [Colors.pink, Colors.lightGreenAccent],
+              colors: [Colors.orange[600], Colors.orange[400]],
               begin: const FractionalOffset(0.0, 0.0),
               end: const FractionalOffset(1.0, 0.0),
               stops: [0.0, 1.0],
@@ -215,7 +215,7 @@ class _UploadPageState extends State<UploadPage>
             onPressed: () => uploadImageAndSaveItemInfo(),
             child: Text("Add",
                 style: TextStyle(
-                    color: Colors.pink,
+                    color: Colors.orange,
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold)),
           ),
@@ -244,7 +244,7 @@ class _UploadPageState extends State<UploadPage>
           ListTile(
             leading: Icon(
               Icons.perm_device_information,
-              color: Colors.pink,
+              color: Colors.orange,
             ),
             title: Container(
               width: 250.0,
@@ -260,12 +260,12 @@ class _UploadPageState extends State<UploadPage>
             ),
           ),
           Divider(
-            color: Colors.pink,
+            color: Colors.orange,
           ),
           ListTile(
             leading: Icon(
               Icons.perm_device_information,
-              color: Colors.pink,
+              color: Colors.orange,
             ),
             title: Container(
               width: 250.0,
@@ -281,12 +281,12 @@ class _UploadPageState extends State<UploadPage>
             ),
           ),
           Divider(
-            color: Colors.pink,
+            color: Colors.orange,
           ),
           ListTile(
             leading: Icon(
               Icons.perm_device_information,
-              color: Colors.pink,
+              color: Colors.orange,
             ),
             title: Container(
               width: 250.0,
@@ -302,12 +302,12 @@ class _UploadPageState extends State<UploadPage>
             ),
           ),
           Divider(
-            color: Colors.pink,
+            color: Colors.orange,
           ),
           ListTile(
             leading: Icon(
               Icons.perm_device_information,
-              color: Colors.pink,
+              color: Colors.orange,
             ),
             title: Container(
               width: 250.0,
@@ -324,7 +324,7 @@ class _UploadPageState extends State<UploadPage>
             ),
           ),
           Divider(
-            color: Colors.pink,
+            color: Colors.orange,
           ),
         ],
       ),
@@ -345,7 +345,7 @@ class _UploadPageState extends State<UploadPage>
     final Reference storageReference =
         FirebaseStorage.instance.ref().child("Item");
     UploadTask upTask =
-         storageReference.child("product_$productId.jpg").putFile(mFileImage);
+        storageReference.child("product_$productId.jpg").putFile(mFileImage);
     // TaskSnapshot uploadTask = await storageReference.putFile(mFileImage);
     String downloadUrl = await (await upTask).ref.getDownloadURL();
     return downloadUrl;

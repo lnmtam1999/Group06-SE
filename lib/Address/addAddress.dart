@@ -45,12 +45,12 @@ class AddAddress extends StatelessWidget {
                 FocusScope.of(context).requestFocus(FocusNode());
                 formKey.currentState.reset();
               });
-              Route route = MaterialPageRoute(builder: (c)=> StoreHome());
+              Route route = MaterialPageRoute(builder: (c) => StoreHome());
               Navigator.pushReplacement(context, route);
             }
           },
           label: Text("Done"),
-          backgroundColor: Colors.pink,
+          backgroundColor: Colors.orange,
           icon: Icon(Icons.check),
         ),
         body: SingleChildScrollView(

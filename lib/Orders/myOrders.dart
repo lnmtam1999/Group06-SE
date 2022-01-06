@@ -10,8 +10,6 @@ class MyOrders extends StatefulWidget {
   _MyOrdersState createState() => _MyOrdersState();
 }
 
-
-
 class _MyOrdersState extends State<MyOrders> {
   @override
   Widget build(BuildContext context) {
@@ -22,7 +20,7 @@ class _MyOrdersState extends State<MyOrders> {
           flexibleSpace: Container(
             decoration: new BoxDecoration(
               gradient: new LinearGradient(
-                colors: [Colors.pink, Colors.lightGreenAccent],
+                colors: [Colors.orange[600], Colors.orange[400]],
                 begin: const FractionalOffset(0.0, 0.0),
                 end: const FractionalOffset(1.0, 0.0),
                 stops: [0.0, 1.0],
@@ -31,11 +29,17 @@ class _MyOrdersState extends State<MyOrders> {
             ),
           ),
           centerTitle: true,
-          title: Text("My Orders",style: TextStyle(color:Colors.white),),
+          title: Text(
+            "My Orders",
+            style: TextStyle(color: Colors.white),
+          ),
           actions: [
             IconButton(
-              icon: Icon(Icons.arrow_drop_down_circle,color: Colors.white,),
-              onPressed: (){
+              icon: Icon(
+                Icons.arrow_drop_down_circle,
+                color: Colors.white,
+              ),
+              onPressed: () {
                 SystemNavigator.pop();
               },
             ),
@@ -43,38 +47,45 @@ class _MyOrdersState extends State<MyOrders> {
         ),
         body: StreamBuilder<QuerySnapshot>(
           stream: EcommerceApp.firestore
-          .collection(EcommerceApp.collectionUser)
-          .doc(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
-          .collection(EcommerceApp.collectionOrders).snapshots(),
-
-          builder: (c,snapshot){
+              .collection(EcommerceApp.collectionUser)
+              .doc(EcommerceApp.sharedPreferences
+                  .getString(EcommerceApp.userUID))
+              .collection(EcommerceApp.collectionOrders)
+              .snapshots(),
+          builder: (c, snapshot) {
             return snapshot.hasData
                 ? ListView.builder(
+                    itemCount: snapshot.data.docs.length,
+                    itemBuilder: (c, index) {
+                      print("a");
+                      Map<String, dynamic> order =
+                          snapshot.data.docs[index].data();
 
-              itemCount: snapshot.data.docs.length,
-              itemBuilder: (c,index){
-                print("a");
-                Map<String, dynamic> order = snapshot.data.docs[index].data();
-
-                return FutureBuilder<QuerySnapshot>(
-                  future: FirebaseFirestore.instance.collection("items").where("shortInfo",whereIn: order[EcommerceApp.productID]).get(),
-
-                  builder: (c,snap){
-                    return snap.hasData
-                        ? OrderCard(
-                      itemCount: snap.data.docs.length,
-                      data: snap.data.docs,
-                      orderID: snap.data.docs[index].id,
-                    )
-                        :Center(child: circularProgress(),);
-                  },
-                );
-              },
-            )
-                :Center(child: circularProgress(),);
+                      return FutureBuilder<QuerySnapshot>(
+                        future: FirebaseFirestore.instance
+                            .collection("items")
+                            .where("shortInfo",
+                                whereIn: order[EcommerceApp.productID])
+                            .get(),
+                        builder: (c, snap) {
+                          return snap.hasData
+                              ? OrderCard(
+                                  itemCount: snap.data.docs.length,
+                                  data: snap.data.docs,
+                                  orderID: snap.data.docs[index].id,
+                                )
+                              : Center(
+                                  child: circularProgress(),
+                                );
+                        },
+                      );
+                    },
+                  )
+                : Center(
+                    child: circularProgress(),
+                  );
           },
         ),
-
       ),
     );
   }

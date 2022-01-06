@@ -17,7 +17,7 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
       flexibleSpace: Container(
         decoration: new BoxDecoration(
           gradient: new LinearGradient(
-            colors: [Colors.pink, Colors.lightGreenAccent],
+            colors: [Colors.orange[600], Colors.orange[400]],
             begin: const FractionalOffset(0.0, 0.0),
             end: const FractionalOffset(1.0, 0.0),
             stops: [0.0, 1.0],
@@ -38,7 +38,7 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
             IconButton(
               icon: Icon(
                 Icons.shopping_cart,
-                color: Colors.pink,
+                color: Colors.orange,
               ),
               onPressed: () {
                 Route route = MaterialPageRoute(builder: (c) => CartPage());
@@ -51,7 +51,7 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
                   Icon(
                     Icons.brightness_1,
                     size: 20.0,
-                    color: Colors.green,
+                    color: Colors.white54,
                   ),
                   Positioned(
                     top: 3.0,
